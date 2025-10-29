@@ -1,0 +1,30 @@
+# Arquivo .gitignore recomendado para .NET
+
+### DotnetCore ###
+# Pastas de build
+[Bb]in/
+[Oo]bj/
+
+# Ignorar arquivos de "user specific" (configurações locais do dev)
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignorar arquivos de IDE
+.vscode/
+.idea/
+*.suo
+
+# Ignorar o diretório de publicação
+publish/
+Release/
+
+# Arquivos de segredos (User Secrets do .NET)
+secrets.xml
+secrets.json
+
+# Arquivos de ambiente locais (nunca envie segredos!)
+
+
+# Arquivos de Log
+*.log
