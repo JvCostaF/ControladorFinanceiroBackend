@@ -1,7 +1,8 @@
 using ControladorFinanceiro.Application;
 using ControladorFinanceiro.Infrastructure;
-
+using ControladorFinanceiro.Infrastructure.DB;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,12 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // --- 2. SERVIÇOS DA PRÓPRIA API ---
 builder.Services.AddControllers();
+
+builder.Services.AddHealthChecks()
+                .AddDbContextCheck<BDContext>(name:"ControladorFinanceiroDB");
+
+var connectionString = builder.Configuration.GetConnectionString("ControladorFinanceiroDB");
+builder.Services.AddDbContext<BDContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,5 +35,7 @@ app.UseHttpsRedirection();
 
 // --- 3. MAPEAMENTO DE ENDPOINTS ---
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();
