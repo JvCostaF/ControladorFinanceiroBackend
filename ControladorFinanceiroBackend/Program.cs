@@ -20,9 +20,8 @@ builder.Services.AddHealthChecks()
                     failureStatus: HealthStatus.Degraded,
                     tags: new[] { "DataBase" });
 
-var connectionString = builder.Configuration.GetConnectionString("ControladorFinanceiroDB");
-builder.Services.AddDbContext<BDContext>(options =>
-                    options.UseNpgsql(connectionString));
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
