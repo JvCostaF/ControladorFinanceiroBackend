@@ -3,6 +3,7 @@ using ControladorFinanceiro.Infrastructure;
 using ControladorFinanceiro.Infrastructure.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +15,14 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();
 
 builder.Services.AddHealthChecks()
-                .AddDbContextCheck<BDContext>(name:"ControladorFinanceiroDB");
+                .AddDbContextCheck<BDContext>(
+                    name: "ControladorFinanceiroDB",
+                    failureStatus: HealthStatus.Degraded,
+                    tags: new[] { "DataBase" });
 
 var connectionString = builder.Configuration.GetConnectionString("ControladorFinanceiroDB");
-builder.Services.AddDbContext<BDContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddDbContext<BDContext>(options =>
+                    options.UseNpgsql(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
