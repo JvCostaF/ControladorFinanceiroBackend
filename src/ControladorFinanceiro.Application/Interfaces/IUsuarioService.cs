@@ -6,5 +6,9 @@ namespace ControladorFinanceiro.Application.Interfaces;
 public interface IUsuarioService
 {
     Task<IEnumerable<Usuario>> ListarAsync();
+    Task<Usuario> ObterUsuarioPorIdAsync(Guid Id);
+    Task<Usuario> ObterUsuarioPorEmailAsync(string email);
     Task CriarNovoUsuario(Usuario usuario);
+    Task AtualizarUsuario(Usuario usuario);
+    Task DeletarUsuario(Guid id);
 }

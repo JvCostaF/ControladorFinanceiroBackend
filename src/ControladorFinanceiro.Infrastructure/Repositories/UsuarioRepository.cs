@@ -15,14 +15,39 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Usuario>> ListarAsync()
+    {
+        return await _context.Usuarios.AsNoTracking().ToListAsync();
+    }
+
+    public async Task<Usuario> ObterUsuarioPorIdAsync(Guid id)
+    {
+        return await _context.Usuarios.FindAsync(id) ?? throw new KeyNotFoundException($"Usuario com id: {id} nao encontrado.");
+    }
+    
+    public async Task<Usuario> ObterUsuarioPorEmailAsync(string email)
+    {
+        return await _context.Usuarios.FindAsync(email) ?? throw new KeyNotFoundException($"Usuario com email: {email} nao encontrado.");
+    }
+
     public async Task CriarNovoUsuario(Usuario usuario)
     {
         await _context.Usuarios.AddAsync(usuario);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Usuario>> ListarAsync()
+    public async Task AtualizarUsuario(Usuario usuario)
     {
-        return await _context.Usuarios.AsNoTracking().ToListAsync();
+        _context.Usuarios.Update(usuario);
+        await _context.SaveChangesAsync();
     }
+    
+    public async Task DeletarUsuario(Guid id)
+    {
+        var usuario = await _context.Usuarios.FindAsync(id) ?? throw new KeyNotFoundException($"Usuario com id: {id} nao encontrado.");
+        _context.Usuarios.Remove(usuario);
+        await _context.SaveChangesAsync();
+    }
+
+    
 }

@@ -12,13 +12,34 @@ public class UsuarioService : IUsuarioService
     {
         _repository = repository;
     }
+
+    public async Task<IEnumerable<Usuario>> ListarAsync()
+    {
+        return await _repository.ListarAsync();
+    }
+
+    public async Task<Usuario> ObterUsuarioPorIdAsync(Guid id)
+    {
+        return await _repository.ObterUsuarioPorIdAsync(id);
+    }
+
+    public async Task<Usuario> ObterUsuarioPorEmailAsync(string email)
+    {
+        return await _repository.ObterUsuarioPorEmailAsync(email);
+    }
+
     public async Task CriarNovoUsuario(Usuario usuario)
     {
         await _repository.CriarNovoUsuario(usuario);
     }
 
-    public async Task<IEnumerable<Usuario>> ListarAsync()
+    public async Task AtualizarUsuario(Usuario usuario)
     {
-        return await _repository.ListarAsync();
+        await _repository.AtualizarUsuario(usuario);
+    }
+
+    public async Task DeletarUsuario(Guid id)
+    {
+        await _repository.DeletarUsuario(id);
     }
 }
