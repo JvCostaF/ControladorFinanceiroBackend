@@ -1,6 +1,5 @@
 using ControladorFinanceiro.Application.Interfaces;
 using ControladorFinanceiro.Domain.Entities;
-using ControladorFinanceiroBackend.Models.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
