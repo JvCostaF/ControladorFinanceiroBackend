@@ -38,7 +38,7 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task AtualizarUsuario(Usuario usuario)
     {
-        _context.Usuarios.Update(usuario);
+        _context.Usuarios.Update(usuario); // TO-DO: Precisamos rever a logica de update, da maneira que esta nao funciona!
         await _context.SaveChangesAsync();
     }
     
