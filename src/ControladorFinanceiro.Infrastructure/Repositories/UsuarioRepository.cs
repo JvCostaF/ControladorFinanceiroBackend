@@ -27,7 +27,7 @@ public class UsuarioRepository : IUsuarioRepository
     
     public async Task<Usuario> ObterUsuarioPorEmailAsync(string email)
     {
-        return await _context.Usuarios.FindAsync(email) ?? throw new KeyNotFoundException($"Usuario com email: {email} nao encontrado.");
+        return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Endereco.Equals(email));
     }
 
     public async Task CriarNovoUsuario(Usuario usuario)

@@ -1,7 +1,9 @@
 using ControladorFinanceiro.Application.Interfaces;
+using ControladorFinanceiro.Application.DTOs;
 using ControladorFinanceiro.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ControladorFinanceiro.Application.DTOs.Requests;
 
 namespace ControladorFinanceiroBackend.Controllers
 {
@@ -35,10 +37,10 @@ namespace ControladorFinanceiroBackend.Controllers
         }
 
         [HttpPost("cria-usuario")]
-        public async Task<IActionResult> CriaUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> CriaUsuario([FromBody] NovoUsuarioDTO novoUsuario)
         {
-            await _usuarioService.CriarNovoUsuario(usuario);
-            return CreatedAtAction(nameof(ObterUsuarioPorId), new { id = usuario.Id }, usuario);
+            await _usuarioService.CriarNovoUsuario(novoUsuario);
+            return Created("api/usuarios/" + novoUsuario.Nome, novoUsuario);
         }
 
         [HttpPut("atualiza-usuario")]

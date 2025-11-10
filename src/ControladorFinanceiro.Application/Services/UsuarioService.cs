@@ -1,6 +1,8 @@
 using System;
+using ControladorFinanceiro.Application.DTOs.Requests;
 using ControladorFinanceiro.Application.Interfaces;
 using ControladorFinanceiro.Domain.Entities;
+using ControladorFinanceiro.Domain.ValueObjects;
 
 namespace ControladorFinanceiro.Application.Services;
 
@@ -28,8 +30,10 @@ public class UsuarioService : IUsuarioService
         return await _repository.ObterUsuarioPorEmailAsync(email);
     }
 
-    public async Task CriarNovoUsuario(Usuario usuario)
+    public async Task CriarNovoUsuario(NovoUsuarioDTO novoUsuario)
     {
+        string senhaHash = BCrypt.Net.BCrypt.HashPassword(novoUsuario.Senha);
+        Usuario usuario = new Usuario(novoUsuario.Nome, new Email(novoUsuario.Email), senhaHash);
         await _repository.CriarNovoUsuario(usuario);
     }
 

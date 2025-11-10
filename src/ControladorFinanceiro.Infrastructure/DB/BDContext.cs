@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using ControladorFinanceiro.Domain.Entities;
 using System.Reflection;
+using ControladorFinanceiro.Infrastructure.DB.Configurations;
 
 namespace ControladorFinanceiro.Infrastructure.DB;
 
@@ -25,7 +26,8 @@ public class BDContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+        base.OnModelCreating(modelBuilder);
     }
 
 }
